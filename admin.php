@@ -1,8 +1,8 @@
 <?php
 session_start();
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-    header('Location: ../backend/login.php');
-    exit;
+if ($_SESSION['role'] != 'admin') {
+    header('Location: ../index.php'); // Jika bukan admin, redirect ke halaman login
+    exit();
 }
 ?>
 
@@ -11,12 +11,15 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Produk</title>
+    <title>Dashboard Admin</title>
     <!-- Link CSS Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
+        }
+        .navbar {
+            margin-bottom: 30px;
         }
         .container {
             margin-top: 50px;
@@ -41,7 +44,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="admin.php">Kembali ke Halaman Admin</a>
+                        <a class="nav-link" href="create.php">Lihat Produk</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="show.php">Lihat Data Produk</a>
@@ -54,27 +57,19 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
     </nav>
 
     <div class="container">
-        <!-- Card untuk Form Input Produk -->
-        <div class="card">
+        <!-- Card untuk menampilkan informasi -->
+        <div class="card mb-4">
             <div class="card-header">
-                <h2>Tambah Produk</h2>
+                <h2>Selamat datang, Admin <?= htmlspecialchars($_SESSION['name']); ?>!</h2>
             </div>
             <div class="card-body">
-                <form action="./backend/create.php" method="post" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nama Produk</label>
-                        <input type="text" name="name" id="name" class="form-control" placeholder="Input Nama Produk" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="price" class="form-label">Harga Produk</label>
-                        <input type="number" name="price" id="price" class="form-control" placeholder="Input Harga Produk" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Gambar Produk</label>
-                        <input type="file" name="image" id="image" class="form-control" required>
-                    </div>
-                    <button type="submit" name="submit" class="btn btn-primary w-100">Simpan</button>
-                </form>
+                <p class="lead">Anda memiliki kontrol penuh atas produk dan pengguna. Silakan pilih salah satu opsi di bawah ini:</p>
+                <div class="d-flex justify-content-between">
+                    <!-- Tombol Lihat Produk -->
+                    <a href="create.php" class="btn btn-primary btn-lg w-48">Lihat Produk</a>
+                    <!-- Tombol Logout -->
+                    <a href="backend/logout.php" class="btn btn-danger btn-lg w-48">Logout</a>
+                </div>
             </div>
         </div>
     </div>
